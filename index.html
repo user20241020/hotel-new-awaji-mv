@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動画プレイヤー</title>
+    <style>
+        /* 画面全体のデザイン調整 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* 落ち着いた暗めの背景 */
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* プレイヤーのコンテナ */
+        .video-container {
+            width: 90%;
+            max-width: 800px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* 動画自体のスタイル */
+        video {
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container">
+    <!-- 
+      controls: 再生バーや音量などのコントローラーを表示
+      autoplay: 自動再生（※音声ありの自動再生はブラウザにブロックされることが多いため、基本はmuted推奨ですが、今回はご要望通り通常再生で設定しています）
+      loop: ループ再生（必要なければ削除してください）
+    -->
+    <video src="hoterunyuawaji mv.mp4" controls autoplay loop>
+        お使いのブラウザは動画タグをサポートしていません。
+    </video>
+</div>
+
+</body>
+</html>

@@ -3,135 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QRコード配置</title>
+    <title>動画プレイヤー</title>
     <style>
-        /* ページ全体の基本スタイル */
+        /* 画面全体のデザイン調整 */
         body {
             margin: 0;
             padding: 0;
+            background-color: #1a1a1a; /* 落ち着いた暗めの背景 */
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            font-family: sans-serif;
-            background-color: #f0f2f5;
         }
 
-        /* --- QRコード（a.jpg）のコンテナ設定 --- */
-        .qr-fixed-container {
-            position: fixed;    /* 画面に対して固定 */
-            right: 20px;        /* 右端からの距離 */
-            bottom: 20px;       /* 下端からの距離 */
-            z-index: 1000;      /* 他の要素の上に表示 */
-            
-            /* 大きさの指定 (QRコードとして見やすいサイズ感) */
-            width: 150px;       
-            height: 150px;
-            
-            /* 見た目の装飾（白い枠と影） */
-            background-color: #ffffff;
-            padding: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        /* プレイヤーのコンテナ */
+        .video-container {
+            width: 90%;
+            max-width: 800px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border-radius: 8px;
-            
-            /* 画像クリックを促すカーソル */
-            cursor: pointer;
-            
-            /* アニメーション設定（ふわっと表示） */
-            animation: fadeIn 0.5s ease-in-out;
-            
-            /* 画像が枠からはみ出ないようにする */
             overflow: hidden;
         }
 
-        /* --- imgタグ自体の設定 --- */
+        /* 動画自体のスタイル */
+        video {
+            width: 100%;
+            display: block;
+        }
+
+        /* --- 右上に配置するQRコード（a.jpg）のスタイル --- */
+        .qr-fixed-container {
+            position: fixed;    /* 画面に対して固定 */
+            top: 20px;          /* 上端からの距離 */
+            right: 20px;        /* 右端からの距離 */
+            z-index: 1000;      /* 動画より手前に表示させる */
+            
+            width: 120px;       /* QRコードの大きさ */
+            height: 120px;
+            
+            background-color: #ffffff; /* 白い背景と枠 */
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
         .qr-fixed-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 比率を保って枠内に収める */
+            object-fit: contain;
             display: block;
-            transition: transform 0.3s ease; /* ホバー時の動き */
-        }
-
-        /* ホバー時のわずかな拡大効果 */
-        .qr-fixed-container:hover img {
-            transform: scale(1.05);
-        }
-
-        /* ふわっと表示するアニメーションの定義 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- スマホ表示時の調整 --- */
-        @media (max-width: 600px) {
-            .qr-fixed-container {
-                width: 120px; /* 少し小さくする */
-                height: 120px;
-                right: 10px;
-                bottom: 10px;
-                padding: 8px;
-            }
-        }
-
-        /* --- 【おまけ】クリック時の拡大表示用モーダルスタイル --- */
-        .modal-overlay {
-            display: none; /* 初期状態は非表示 */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-        }
-        
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-overlay img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 5px solid #fff;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
     </style>
 </head>
 <body>
 
-<!-- ページのコンテンツ（サンプル） -->
-<div style="padding: 50px;">
-    <h1>ウェブサイトへようこそ</h1>
-    <p>右下にQRコードが表示されています。</p>
-    <p>このエリアはスクロールします...</p>
-    <div style="height: 1500px; background: repeating-linear-gradient(45deg, #eee, #eee 10px, #fff 10px, #fff 20px);"></div>
+<!-- 右上に固定表示されるQRコード -->
+<div class="qr-fixed-container">
+    <img src="a.jpg" alt="QRコード">
 </div>
 
-<!-- --- QRコード配置部分 --- -->
-<!-- 画像をクリックすると拡大する機能を付与 -->
-<div class="qr-fixed-container" onclick="openModal()">
-    <!-- ここで a.jpg を読み込みます -->
-    <img src="a.jpg" alt="QRコード" id="qrImage">
+<div class="video-container">
+    <!-- 
+      controls: 再生バーや音量などのコントローラーを表示
+      autoplay: 自動再生
+      loop: ループ再生
+    -->
+    <video src="hoterunyuawaji mv.mp4" controls autoplay loop>
+        お使いのブラウザは動画タグをサポートしていません。
+    </video>
 </div>
-
-<!-- --- 拡大表示用モーダル（HTMLの最後に配置） --- -->
-<div class="modal-overlay" id="qrModal" onclick="closeModal()">
-    <img src="a.jpg" alt="QRコード拡大">
-</div>
-
-<script>
-    // クリックで拡大・縮小するためのJavaScript
-    function openModal() {
-        document.getElementById('qrModal').classList.add('active');
-    }
-
-    function closeModal() {
-        document.getElementById('qrModal').classList.remove('active');
-    }
-</script>
 
 </body>
 </html>
